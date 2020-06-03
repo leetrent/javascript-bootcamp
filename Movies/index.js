@@ -5,7 +5,10 @@ const fetchData = async (searchTerm, apiKey) => {
             s: searchTerm
         }
     });
-    //console.log(response.data);
+    
+    if (response.data.Error) {
+        return [];
+    }
     return response.data.Search;
 };
 
