@@ -5,12 +5,22 @@ const fetchData = async (searchTerm, apiKey) => {
             s: searchTerm
         }
     });
-    console.log(response.data);
+    //console.log(response.data);
+    return response.data.Search;
 };
 
-const onSearchTermInput = (event) => {
+const onSearchTermInput = async (event) => {
     if (apiKeyInput.value) {
-        fetchData(event.target.value, apiKeyInput.value);
+        const movies = await fetchData(event.target.value, apiKeyInput.value);
+        console.log(movies);
+        for ( let movie of movies) {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <img src="${movie.Poster}" />
+                <h1>${movie.Title}</h1>
+            `;
+            document.querySelector('#target').appendChild(div);
+        }
     }
 };
 
