@@ -15,6 +15,10 @@ const fetchData = async (searchTerm, apiKey) => {
 const onSearchTermInput = async (event) => {
     if (apiKeyInput.value) {
         const movies = await fetchData(event.target.value, apiKeyInput.value);
+        if ( !movies.length ) {
+            dropdown.classList.remove('is-active');
+            return;
+        }
         resultsWrapper.innerHTML = '';
         dropdown.classList.add('is-active');
         for (let movie of movies) {
