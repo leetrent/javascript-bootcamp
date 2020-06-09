@@ -29,6 +29,9 @@ const onSearchTermInput = async (event) => {
                 <img src="${imgSrc}" />
                 ${movie.Title}
             `;
+            option.addEventListener('click', () => {
+                dropdown.classList.remove('is-active');
+            });
             resultsWrapper.appendChild(option);
         }
     }
