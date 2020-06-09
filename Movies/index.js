@@ -47,3 +47,9 @@ const resultsWrapper    = document.querySelector('.results');
 
 searchTermInput.addEventListener( 'input', debounce(onSearchTermInput, 2000) );
 
+document.addEventListener('click', event => {
+    if ( !root.contains(event.target) ) {
+        dropdown.classList.remove('is-active');
+    }
+});
+
