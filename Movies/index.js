@@ -31,6 +31,7 @@ const onSearchTermInput = async (event) => {
             `;
             option.addEventListener('click', () => {
                 dropdown.classList.remove('is-active');
+                searchTermInput.value = movie.Title;
             });
             resultsWrapper.appendChild(option);
         }
