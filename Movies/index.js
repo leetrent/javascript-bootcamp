@@ -32,6 +32,7 @@ const onSearchTermInput = async (event) => {
             option.addEventListener('click', () => {
                 dropdown.classList.remove('is-active');
                 searchTermInput.value = movie.Title;
+                onMovieSelect(movie);
             });
             resultsWrapper.appendChild(option);
         }
@@ -61,3 +62,16 @@ document.addEventListener('click', event => {
     }
 });
 
+function getApiKey() {
+    return apiKeyInput.value;
+}
+const onMovieSelect = async movie => {
+    console.log(movie);
+    const response = await axios.get('http://www.omdbapi.com/', {
+        params: {
+            apikey: getApiKey(),
+            i: movie.imdbID
+        }
+    });
+    console.log("[onMovieSelect] => (response.data): ", response.data);
+};
