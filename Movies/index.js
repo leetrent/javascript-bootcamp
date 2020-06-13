@@ -21,17 +21,16 @@ apiKeyInput.addEventListener('input', function(event) {
     console.log(`[apiKeyInput][EventListener][input] => (event.target.value): "${event.target.value}"`);
     let apiKeyValue= event.target.value;
     createAutoComplete({
+        apiKey: apiKeyValue,
         root: document.querySelector('.autocomplete'),
-        apiKey: apiKeyValue
-    });
-    createAutoComplete({
-        root: document.querySelector('.autocomplete-two'),
-        apiKey: apiKeyValue
-    
-    });
-    createAutoComplete({
-        root: document.querySelector('.autocomplete-three'),
-        apiKey: apiKeyValue
+        renderOption(movie) {
+            const imgSrc = (movie.Poster === 'N/A') ? '' : movie.Poster;
+            return `
+            <img src="${imgSrc}" />
+            ${movie.Title} (${movie.Year})
+        `;
+        }
+        
     });
 });
 
