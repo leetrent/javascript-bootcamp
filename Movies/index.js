@@ -1,17 +1,3 @@
-const fetchData = async (searchTerm, apiKey) => {
-    const response = await axios.get('http://www.omdbapi.com/', {
-        params: {
-            apikey: apiKey,
-            s: searchTerm
-        }
-    });
-    
-    if (response.data.Error) {
-        return [];
-    }
-    return response.data.Search;
-};
-
 function getApiKey() {
     return apiKeyInput.value;
 }
@@ -35,6 +21,18 @@ apiKeyInput.addEventListener('input', function(event) {
         },
         inputValue(movie) {
             return movie.Title;
+        },
+        async fetchData(searchTerm) {
+            const response = await axios.get('http://www.omdbapi.com/', {
+                params: {
+                    apikey: apiKeyValue,
+                    s: searchTerm
+                }
+            });
+            if (response.data.Error) {
+                return [];
+            }
+            return response.data.Search;                       
         }
     });
 });
