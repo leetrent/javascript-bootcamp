@@ -1,4 +1,4 @@
-const createAutoComplete = ({apiKey, root, renderOption}) => {
+const createAutoComplete = ({apiKey, root, renderOption, onOptionSelect, inputValue}) => {
     console.log(`[createAutoComplete] => (apiKey): ${apiKey}`)
     root.innerHTML = `
         <label><b>Search for a Movie</b></label>
@@ -29,8 +29,8 @@ const createAutoComplete = ({apiKey, root, renderOption}) => {
                 option.innerHTML = renderOption(movie);
                 option.addEventListener('click', () => {
                     dropdown.classList.remove('is-active');
-                    searchTermInput.value = movie.Title;
-                    onMovieSelect(movie);
+                    searchTermInput.value = inputValue(movie);
+                    onOptionSelect(movie);
                 });
                 resultsWrapper.appendChild(option);
             }
