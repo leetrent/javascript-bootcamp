@@ -82,26 +82,26 @@ const runComparison = () => {
     const rightSideStats = document.querySelectorAll('#right-summary .notification');
 
     leftSideStats.forEach( (leftStat, index) => {
-        const rightStat = rightSideStats[index];
-        const leftSideValue  = leftStat.dataset.value;
-        const rightSideValue = rightStat.dataset.value;
+        const rightStat      = rightSideStats[index];
+        const leftSideValue  = parseInt(leftStat.dataset.value);
+        const rightSideValue = parseInt(rightStat.dataset.value);
 
         if (rightSideValue > leftSideValue) {
             leftStat.classList.remove('is-primary');
             leftStat.classList.add('is-warning');
         } else {
-            leftStat.classList.remove('is-primary');
-            leftStat.classList.add('is-warning');
+            rightStat.classList.remove('is-primary');
+            rightStat.classList.add('is-warning');
         }
     });
 }
 
 
 const movieTemplate = (movieDetail) => {
-    const dollars = (movieDetail.BoxOffice === 'N/A') ? 0 : parseInt(movieDetail.BoxOffice.replace(/\$/g, '').replace(/,/g, ''));
-    const metascore = parseInt(movieDetail.Metascore);
-    const imdbRating = parseFloat(movieDetail.imdbRating);
-    const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ''));
+    const dollars       = (movieDetail.BoxOffice  === 'N/A') ? 0 : parseInt(movieDetail.BoxOffice.replace(/\$/g, '').replace(/,/g, ''));
+    const metascore     = (movieDetail.Metascore  === 'N/A') ? 0 : parseInt(movieDetail.Metascore);
+    const imdbRating    = (movieDetail.imdbRating === 'N/A') ? 0 : parseFloat(movieDetail.imdbRating);
+    const imdbVotes     = (movieDetail.imdbVotes  === 'N/A') ? 0 : parseInt(movieDetail.imdbVotes.replace(/,/g, ''));
 
     // let count = 0;
     // const awards = movieDetail.Awards.split(' ').forEach( (word) => {
