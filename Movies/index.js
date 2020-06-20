@@ -12,7 +12,7 @@ apiKeyInput.addEventListener('input', function(event) {
         root: document.querySelector('#left-autocomplete'),
         onOptionSelect(movie) {
             document.querySelector('.tutorial').classList.add('is-hidden');
-            onMovieSelect(movie, document.querySelector('#left-summary'));
+            onMovieSelect(movie, document.querySelector('#left-summary'), 'left');
         }
     });
     createAutoComplete({
@@ -21,7 +21,7 @@ apiKeyInput.addEventListener('input', function(event) {
         root: document.querySelector('#right-autocomplete'),
         onOptionSelect(movie) {
             document.querySelector('.tutorial').classList.add('is-hidden');
-            onMovieSelect(movie, document.querySelector('#right-summary'));
+            onMovieSelect(movie, document.querySelector('#right-summary'), 'right');
         }
     });
 });
@@ -50,8 +50,9 @@ const autoCompleteConfig = {
         return response.data.Search;                       
     }
 };
-
-const onMovieSelect = async (movie, summaryElement) => {
+let leftMovie;
+let rightMovie;
+const onMovieSelect = async (movie, summaryElement, side) => {
     console.log("summaryElement", summaryElement);
     const leftSummary = document.querySelector('#left-summary')
     console.log("leftSummary", leftSummary);
@@ -64,7 +65,23 @@ const onMovieSelect = async (movie, summaryElement) => {
     });
     // console.log("[onMovieSelect] => (response.data): ", response.data);
     summaryElement.innerHTML = movieTemplate(response.data);
+
+    if ( side === 'left') {
+        leftMovie = response.data;
+    } else {
+        rightMovie = response.data;
+    }
+
+    if ( leftMovie && rightMovie) {
+        runComparison();
+    }
 };
+
+const runComparison = () => {
+    console.log("[index.js][runComparision()] =>");
+
+}
+
 
 const movieTemplate = (movieDetail) => {
     return `
