@@ -84,6 +84,37 @@ const runComparison = () => {
 
 
 const movieTemplate = (movieDetail) => {
+    const dollars = (movieDetail.BoxOffice === 'N/A') ? 0 : parseInt(movieDetail.BoxOffice.replace(/\$/g, '').replace(/,/g, ''));
+    const metascore = parseInt(movieDetail.Metascore);
+    const imdbRating = parseFloat(movieDetail.imdbRating);
+    const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ''));
+
+    // let count = 0;
+    // const awards = movieDetail.Awards.split(' ').forEach( (word) => {
+    //     const value = parseInt(word);
+    //     if ( isNaN(value)) {
+    //         return;
+    //     } else {
+    //         count += value;
+    //     }
+    // });
+
+    const awards = movieDetail.Awards.split(' ').reduce( (previous, word) => {
+        const value = parseInt(word);
+        if ( isNaN(value)) {
+            return previous;
+        } else {
+            return previous + value;
+        }
+    }, 0);
+
+    console.log("movieDetail:", movieDetail);
+    console.log("dollars:",     dollars);
+    console.log("metascore:",   metascore);
+    console.log("imdbRating:",  imdbRating);
+    console.log("imdbVotes:",   imdbVotes);
+    console.log("awards:",      awards);
+
     return `
         <article class="media">
             <figure class="media-left">
