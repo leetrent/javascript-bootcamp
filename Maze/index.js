@@ -6,7 +6,7 @@ const {
     Bodies
 } = Matter;
 
-const cells = 5;
+const cells = 3;
 const width  = 600;
 const height = 600;
 
@@ -24,7 +24,9 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
+//////////////////////////////////////////////////////////////////////////////////////////
 // WALLS
+//////////////////////////////////////////////////////////////////////////////////////////
 const walls = [
     // TOP WALL
     Bodies.rectangle( width / 2, 0, width, 40, {isStatic: true} ),
@@ -37,26 +39,58 @@ const walls = [
 ];
 World.add(world, walls);
 
-
+//////////////////////////////////////////////////////////////////////////////////////////
 // Maze Generation
+//////////////////////////////////////////////////////////////////////////////////////////
+const shuffle = (array) => {
+    let counter = array.length;
+    while (counter > 0) {
+        const index = Math.floor(Math.random() * counter);
+        counter--;
+            const temp = array[counter];
+        array[counter] = array[index];
+          array[index] = temp;
+    }
+    return array;
+};
+
+
+
 const grid          = Array(cells).fill(null).map( () => Array(cells).fill(false) );
 const verticals     = Array(cells).fill(null).map( () => Array(cells - 1).fill(false) );
 const horizontals   = Array(cells -1).fill(null).map( () => Array(cells).fill(false) );
 
-console.log("grid:", grid);
-console.log("verticals:", verticals);
-console.log("horizontals:", horizontals);
+// console.log("grid:", grid);
+// console.log("verticals:", verticals);
+// console.log("horizontals:", horizontals);
 
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
-console.log(`startRow: ${startRow}, startColumn: ${startColumn}`);
+//console.log(`startRow: ${startRow}, startColumn: ${startColumn}`);
 
 const stepThroughCell = (row, column) => {
     // If already have visisted [row, column], return.
+    if (grid[row][column] === true) {
+        return;
+    }
 
     // Mark cell as visited (true).
+    grid[row][column] = true;
 
     // Assemble randomly-ordered list of neighboring cells.
+    //   CELL ABOVE: [row - 1, column]
+    //   CELL RIGHT: [row, column + 1]
+    //    CELL LEFT: [row, column - 1]
+    //   CELL BELOW: [row + 1], column]
+    
+    const neighbors = shuffle([
+        [row - 1, column    ],   // TOP
+        [row,     column + 1],  // RIGHT
+        [row + 1, column    ],  // BOTTOM
+        [row,     column - 1]    // LEFT
+    ]);
+
+    console.log("neighbors [BEFORE]: ", neighbors)
 
     // For each neighboring cell, do the following:
     //  1. Assure that neighbor traversal is in-bounds of grid array.
@@ -65,4 +99,7 @@ const stepThroughCell = (row, column) => {
     //  4. Visit cell (call stepThroughCell(row, column))
 };
 
+// stepThroughCell(startRow, startColumn);
+// console.log("grid:", grid);
 
+stepThroughCell(1, 1);
