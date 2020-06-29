@@ -46,3 +46,23 @@ const horizontals   = Array(cells -1).fill(null).map( () => Array(cells).fill(fa
 console.log("grid:", grid);
 console.log("verticals:", verticals);
 console.log("horizontals:", horizontals);
+
+const startRow = Math.floor(Math.random() * cells);
+const startColumn = Math.floor(Math.random() * cells);
+console.log(`startRow: ${startRow}, startColumn: ${startColumn}`);
+
+const stepThroughCell = (row, column) => {
+    // If already have visisted [row, column], return.
+
+    // Mark cell as visited (true).
+
+    // Assemble randomly-ordered list of neighboring cells.
+
+    // For each neighboring cell, do the following:
+    //  1. Assure that neighbor traversal is in-bounds of grid array.
+    //  2. If neighbor has already been visited, continue to next neighbor.
+    //  3. Remove wall of neighbor that has been visited.
+    //  4. Visit cell (call stepThroughCell(row, column))
+};
+
+
