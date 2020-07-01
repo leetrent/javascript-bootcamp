@@ -85,31 +85,53 @@ const stepThroughCell = (row, column) => {
     
     console.log(`(row): ${row}, column: ${column}]`);
     const neighbors = shuffle([
-        [row - 1, column    ],   // TOP
-        [row,     column + 1],  // RIGHT
-        [row + 1, column    ],  // BOTTOM
-        [row,     column - 1]    // LEFT
+        [row - 1, column,       'up'    ], // UP
+        [row,     column + 1,   'right' ], // RIGHT
+        [row + 1, column,       'down'  ], // DOWN
+        [row,     column - 1,   'left'  ]  // LEFT
     ]);
-    console.log("neighbors [shuffle]: ", neighbors)
-
-    // console.log(`(row): ${row}, column: ${column}]`);
-    // const neighbors = [
-    //     [row - 1, column    ],   // TOP
-    //     [row,     column + 1],  // RIGHT
-    //     [row + 1, column    ],  // BOTTOM
-    //     [row,     column - 1]    // LEFT
-    // ];
-    // console.log("neighbors [no shuffle]: ", neighbors);
-
-    
+ 
     // For each neighboring cell, do the following:
     //  1. Assure that neighbor traversal is in-bounds of grid array.
     //  2. If neighbor has already been visited, continue to next neighbor.
     //  3. Remove wall of neighbor that has been visited.
     //  4. Visit cell (call stepThroughCell(row, column))
+
+    // For each neighboring cell, do the following:
+    for (let neighbor of neighbors) {
+
+        const [nextRow, nextColumn, direction] = neighbor;
+
+        //  1. Assure that neighbor traversal is in-bounds of grid array.
+        if ( (nextRow < 0 || nextRow >= cells) || (nextColumn < 0 || nextColumn >= cells) ) {
+            continue;
+        }
+
+        //  2. If neighbor has already been visited, continue to next neighbor.
+        if (grid[nextRow][nextColumn] == true) {
+            continue;
+        }
+
+        //  3. Remove wall of neighbor that has been visited.
+        if (direction === 'left') {
+            verticals[row][column - 1] = true;
+        }
+        if (direction === 'right') {
+            verticals[row][column] = true;
+        }
+        console.log("verticals", verticals);
+
+        if (direction === 'up') {
+            horizontals[row - 1][column] = true;
+        }
+        if (direction === 'down') {
+            horizontals[row][column] = true;
+        }
+        console.log("horizontals", horizontals);
+    }
+
 };
 
-// stepThroughCell(startRow, startColumn);
-// console.log("grid:", grid);
+stepThroughCell(startRow, startColumn);
+console.log("grid:", grid);
 
-stepThroughCell(1, 1);
