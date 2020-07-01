@@ -83,15 +83,25 @@ const stepThroughCell = (row, column) => {
     //    CELL LEFT: [row, column - 1]
     //   CELL BELOW: [row + 1], column]
     
+    console.log(`(row): ${row}, column: ${column}]`);
     const neighbors = shuffle([
         [row - 1, column    ],   // TOP
         [row,     column + 1],  // RIGHT
         [row + 1, column    ],  // BOTTOM
         [row,     column - 1]    // LEFT
     ]);
+    console.log("neighbors [shuffle]: ", neighbors)
 
-    console.log("neighbors [BEFORE]: ", neighbors)
+    // console.log(`(row): ${row}, column: ${column}]`);
+    // const neighbors = [
+    //     [row - 1, column    ],   // TOP
+    //     [row,     column + 1],  // RIGHT
+    //     [row + 1, column    ],  // BOTTOM
+    //     [row,     column - 1]    // LEFT
+    // ];
+    // console.log("neighbors [no shuffle]: ", neighbors);
 
+    
     // For each neighboring cell, do the following:
     //  1. Assure that neighbor traversal is in-bounds of grid array.
     //  2. If neighbor has already been visited, continue to next neighbor.
