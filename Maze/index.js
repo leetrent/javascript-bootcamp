@@ -6,7 +6,7 @@ const {
     Bodies
 } = Matter;
 
-const cells = 3;
+const cells = 30;
 const width  = 600;
 const height = 600;
 const unitLength = width / cells;
@@ -17,7 +17,7 @@ const render = Render.create({
     element: document.body,
     engine: engine,
     options: {
-        wireframes: false,
+        wireframes: true,
         width,
         height
     }
@@ -143,14 +143,32 @@ horizontals.forEach( (row, rowIndex) => {
             return; 
         }
         const wall = Bodies.rectangle(
-            columnIndex * unitLength + (unitLength / 2), // x-coordinate
-            rowIndex * unitLength + unitLength, // y-coordinate
+            (columnIndex * unitLength) + (unitLength / 2), // x-coordinate
+            (rowIndex * unitLength) + unitLength, // y-coordinate
             unitLength, // width
-            10, // height
+            5, // height
             {
                 isStatic: true
             }
         );
         World.add(world, wall);
    });
+});
+
+verticals.forEach( (row, rowIndex) => {
+    row.forEach( (open, columnIndex) => {
+        if (open) {
+            return;
+        }
+        const wall = Bodies.rectangle(
+            (columnIndex * unitLength) + unitLength, // x-coordinate
+            (rowIndex * unitLength) + (unitLength / 2), // y-coordinate
+            5, // width
+            unitLength, // height
+            {
+                isStatic: true
+            }
+        );
+        World.add(world, wall);
+    });
 });
