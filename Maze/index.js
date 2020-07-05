@@ -9,6 +9,7 @@ const {
 const cells = 3;
 const width  = 600;
 const height = 600;
+const unitLength = width / cells;
 
 const engine = Engine.create();
 const { world } = engine;
@@ -54,8 +55,6 @@ const shuffle = (array) => {
     return array;
 };
 
-
-
 const grid          = Array(cells).fill(null).map( () => Array(cells).fill(false) );
 const verticals     = Array(cells).fill(null).map( () => Array(cells - 1).fill(false) );
 const horizontals   = Array(cells -1).fill(null).map( () => Array(cells).fill(false) );
@@ -83,7 +82,7 @@ const stepThroughCell = (row, column) => {
     //    CELL LEFT: [row, column - 1]
     //   CELL BELOW: [row + 1], column]
     
-    console.log(`(row): ${row}, column: ${column}]`);
+    //console.log(`(row): ${row}, column: ${column}]`);
     const neighbors = shuffle([
         [row - 1, column,       'up'    ], // UP
         [row,     column + 1,   'right' ], // RIGHT
@@ -119,7 +118,7 @@ const stepThroughCell = (row, column) => {
         if (direction === 'right') {
             verticals[row][column] = true;
         }
-        console.log("verticals", verticals);
+        //console.log("verticals", verticals);
 
         if (direction === 'up') {
             horizontals[row - 1][column] = true;
@@ -127,11 +126,31 @@ const stepThroughCell = (row, column) => {
         if (direction === 'down') {
             horizontals[row][column] = true;
         }
-        console.log("horizontals", horizontals);
+        //console.log("horizontals", horizontals);
+
+        stepThroughCell(nextRow, nextColumn);
     }
 
 };
 
 stepThroughCell(startRow, startColumn);
-console.log("grid:", grid);
+//console.log("grid:", grid);
 
+console.log("rows in horizontals:");
+horizontals.forEach( (row, rowIndex) => {
+    row.forEach( (open, columnIndex) => {
+        if (open) { 
+            return; 
+        }
+        const wall = Bodies.rectangle(
+            columnIndex * unitLength + (unitLength / 2), // x-coordinate
+            rowIndex * unitLength + unitLength, // y-coordinate
+            unitLength, // width
+            10, // height
+            {
+                isStatic: true
+            }
+        );
+        World.add(world, wall);
+   });
+});
