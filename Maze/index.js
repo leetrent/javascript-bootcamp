@@ -6,7 +6,7 @@ const {
     Bodies
 } = Matter;
 
-const cells = 3;
+const cells = 15;
 const width  = 600;
 const height = 600;
 const unitLength = width / cells;
@@ -174,6 +174,9 @@ verticals.forEach( (row, rowIndex) => {
     });
 });
 
+////////////////////////////////////////////////
+// GOAL
+////////////////////////////////////////////////
 const goal = Bodies.rectangle (
     width   - (unitLength / 2), // x-coordinate
     height  - (unitLength / 2), // y-coordinate
@@ -184,3 +187,13 @@ const goal = Bodies.rectangle (
     }
 );
 World.add(world, goal);
+
+////////////////////////////////////////////////
+// BALL
+////////////////////////////////////////////////
+const ball = Bodies.circle(
+    unitLength / 2, // x-coordinate
+    unitLength / 2, // y-coordinate
+    unitLength / 4, // radius
+);
+World.add(world, ball);
