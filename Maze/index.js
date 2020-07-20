@@ -3,7 +3,8 @@ const {
     Render, 
     Runner, 
     World, 
-    Bodies
+    Bodies,
+    Body
 } = Matter;
 
 const cells = 15;
@@ -199,16 +200,23 @@ const ball = Bodies.circle(
 World.add(world, ball);
 
 document.addEventListener('keydown', event => {
+    const {x, y} = ball.velocity;
+  
+    // UP
     if (event.keyCode === 87) {
-        console.log("move ball up");
+        Body.setVelocity(ball, {x, y: y - 5} );
     }
+    // RIGHT
     if (event.keyCode === 68) {
-        console.log("move ball right");
+        Body.setVelocity(ball, {x: x + 5, y} );
     }
+    // DOWN
     if (event.keyCode === 83) {
-        console.log("move ball down");
+        Body.setVelocity(ball, {x, y: y + 5} );
     }
+
+    // LEFT
     if (event.keyCode === 65) {
-        console.log("move ball left");
+        Body.setVelocity(ball, {x: x - 5, y} );
     }
 });
