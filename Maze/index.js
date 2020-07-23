@@ -4,10 +4,11 @@ const {
     Runner, 
     World, 
     Bodies,
-    Body
+    Body,
+    Events
 } = Matter;
 
-const cells = 15;
+const cells = 3;
 const width  = 600;
 const height = 600;
 const unitLength = width / cells;
@@ -15,7 +16,9 @@ const wallWidth = 2;
 
 const engine = Engine.create();
 
+//////////////////////////////////////////////////////////////////////////////////////////
 // Disable gravity:
+//////////////////////////////////////////////////////////////////////////////////////////
 engine.world.gravity.y = 0;
 
 const { world } = engine;
@@ -188,6 +191,7 @@ const goal = Bodies.rectangle (
     unitLength * 0.7, // width
     unitLength * 0.7, // height
     {
+        label: 'goal', // needed to detect a 'win' event
         isStatic: true
     }
 );
@@ -200,6 +204,7 @@ const ball = Bodies.circle(
     unitLength / 2, // x-coordinate
     unitLength / 2, // y-coordinate
     unitLength / 4, // radius
+    {label: 'ball'} // needed to detect a 'win' event
 );
 World.add(world, ball);
 
@@ -223,4 +228,17 @@ document.addEventListener('keydown', event => {
     if (event.keyCode === 65) {
         Body.setVelocity(ball, {x: x - 5, y} );
     }
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// WIN CONDITION
+//////////////////////////////////////////////////////////////////////////////////////////
+Events.on(engine, 'collisionStart', event => {
+    event.pairs.forEach( (collision) => {
+        const labels = ['ball', 'goal'];
+        if (labels.includes(collision.bodyA.label)
+                && labels.includes(collision.bodyB.label)) {
+            console.log("USER WON");
+        }
+    });
 });
